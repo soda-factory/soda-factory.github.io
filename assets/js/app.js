@@ -64,8 +64,7 @@
         var $this = $(e.target).closest(".gen"),
             $what = $this.attr("what");
         
-        $this.mousedown(function(){$this.find("svg").css("box-shadow","2px 2px 10px .1rem rgba(0,0,0,.7) inset");});
-        $this.mouseup(function(){$this.find("svg").css("box-shadow","none");});
+        
         
         if ($what === "soda") {
             l.soda = Number(l.soda) + 1;
@@ -104,54 +103,3 @@
     
     
 })( jQuery );
-
-// animate html
-(function($) {
-   "use strict"; 
-   
-   
-   var shop = function() {
-       var $item = $(".item");
-       
-       function showDescription() {
-           var $this = $(this),
-               offset = $this.offset.top;
-           $this.toggleClass("d");
-           $this.siblings().removeClass("d");
-           $this.css({"top": "-" + offset + "px"});
-       }
-       
-       $item.on("click", showDescription);
-   };
-   
-   $(document).ready(function() {
-      shop();
-   });
-   
-})( jQuery );
-
-// pubsub (kommunikation zwischen modulen)
-var ps = {
-  events: {},
-  on: function (eventName, fn) {
-    this.events[eventName] = this.events[eventName] || [];
-    this.events[eventName].push(fn);
-  },
-  off: function(eventName, fn) {
-    if (this.events[eventName]) {
-      for (var i = 0; i < this.events[eventName].length; i++) {
-        if (this.events[eventName][i] === fn) {
-          this.events[eventName].splice(i, 1);
-          break;
-        }
-      };
-    }
-  },
-  emit: function (eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function(fn) {
-        fn(data);
-      });
-    }
-  }
-};
