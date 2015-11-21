@@ -22,37 +22,54 @@
     };
     
     
+    // helpers
+    
+    function num(number) {
+        return Number(number);
+    }
+    
+    function r(number) {
+        return Math.round(Number(number));
+    }
     
     // produce soda 
     function factory(rate) {
-       l.p_rate = Number(l.p_rate) + rate;
+       l.p_rate = num(l.p_rate) + rate;
     }
         
     // sell soda
     function seller(rate) {
-        l.s_rate = Number(l.s_rate) + rate;
+        l.s_rate = num(l.s_rate) + rate;
     }
         
     // increase price through "Public Relations and Marketing"
     function price(amount) {
-        l.price = Number(l.price) + amount;
+        l.price = num(l.price) + amount;
     }
     
     // initialise
     function init() {
-        if (l.money === undefined || l.soda === undefined || l.price === undefined) {
+        if (l.money === undefined || l.soda === undefined 
+        || l.price === undefined || l.s_rate === undefined 
+        || l.p_rate === undefined) {
             l.money = 0;
             l.soda = 0;
             l.price = 30;
+            l.s_rate = 0;
+            l.p_rate = 0;
         } 
         
         $money.html(l.money);
         $soda.html(l.soda);
         $price.html(l.price/10);
+        
+        loop();
     }
     
     // reset
     function reset() {
+        l.p_rate = 0;
+        l.s_rate = 0;
         l.money = 0;
         l.soda = 0;
         l.price = 30;
@@ -67,12 +84,12 @@
         
         
         if ($what === "soda") {
-            l.soda = Number(l.soda) + 1;
+            l.soda = num(l.soda) + 1;
             reload();
         } else if ($what === "money") {
             if (l.soda >= 1) {
-                l.soda = Number(l.soda) - 1;
-                l.money = Math.round(Number(l.money) + l.price/10);
+                l.soda = num(l.soda) - 1;
+                l.money = r(l.money + l.price/10);
                 reload();
             } else {
                 alert("You haven't got enough soda! Go get some first!")
@@ -82,7 +99,15 @@
     
     function loop() {
         setInterval(function() {
-            
+            if (num(l.p_rate) !== 0) {
+                l.soda = num(l.soda) + r(l.p_rate/5);
+                reload();
+            }    
+            if (num(l.s_rate) !== 0 && num(l.soda) >= r(l.s_rate/5)) {
+                l.money = r(l.money + (num(l.s_rate) * l.price/10));
+                l.soda = num(l.soda) - r(l.s_rate);
+                reload();
+            }
         }, 200);
     }
     
