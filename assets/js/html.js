@@ -20,7 +20,8 @@
         
     };
     var shop = function() {
-        var $item = $(".item");
+        var $item = $(".item"),
+            $buy = $(".buy-button");
         
         function showDescription() {
             var $this = $(this),
@@ -29,8 +30,19 @@
             $this.siblings().removeClass("d");
             $this.css({"top": "-" + offset + "px"});
         }
+        
+        function shadow() {
+            var $this = $(this);
+            $this.on("mousedown", function() {
+                $this.css({"box-shadow": "2px 2px 10px .1rem rgba(0,0,0,.2) inset"});
+            });
+            $this.on("mouseup", function() {
+               $this.css({"box-shadow": "none"}); 
+            });
+        }
     
         $item.on("click", showDescription);
+        $buy.on("click", shadow);
    };
    
    $(document).ready(function() {

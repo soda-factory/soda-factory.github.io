@@ -89,10 +89,12 @@
         } else if ($what === "money") {
             if (l.soda >= 1) {
                 l.soda = num(l.soda) - 1;
-                l.money = r(l.money + l.price/10);
+                l.money = num(l.money) + r(l.price/10);
                 reload();
             } else {
-                alert("You haven't got enough soda! Go get some first!")
+                alert("You haven't got enough soda! Go get some first!");
+                // TODO Custom alert action bound by pubsub
+                // ps.emit("alert", "You haven't got enough soda! Go get some first!");
             }
         } else {}
     }
@@ -104,7 +106,7 @@
                 reload();
             }    
             if (num(l.s_rate) !== 0 && num(l.soda) >= r(l.s_rate/5)) {
-                l.money = r(l.money + (num(l.s_rate) * l.price/10));
+                l.money = num(l.money) + r((num(l.s_rate) * l.price/10));
                 l.soda = num(l.soda) - r(l.s_rate);
                 reload();
             }
