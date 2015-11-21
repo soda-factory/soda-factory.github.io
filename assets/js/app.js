@@ -122,7 +122,6 @@
        init();
        $gen.on("click", generator);
        $reset.on("click", reset);
-       
     });
     
     
