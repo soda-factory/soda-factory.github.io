@@ -4,7 +4,7 @@
 .sass-cache/
 *.css.map
 assets/scss/
-
+template.html
 
 ### Node ###
 # Logs
